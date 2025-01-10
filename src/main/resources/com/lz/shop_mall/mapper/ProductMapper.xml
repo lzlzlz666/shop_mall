@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lz.shop_mall.mapper.ProductMapper">
+    <!-- 获取热销商品前8名的列表 -->
+    <select id="hotList" resultType="com.lz.shop_mall.pojo.Product">
+        <!-- SQL 注释: 选择库存大于0的商品，并根据销量降序排列，限制返回结果为前8条 -->
+        SELECT * FROM product
+        WHERE product_stock > 0
+        ORDER BY product_sales DESC
+        LIMIT 8
+    </select>
+</mapper>
