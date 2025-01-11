@@ -11,4 +11,34 @@
         ORDER BY product_sales DESC
         LIMIT 8
     </select>
+
+    <!-- 分页查询 -->
+    <select id="listByCondition" resultType="com.lz.shop_mall.pojo.Product">
+        SELECT * FROM product
+        <where>
+            <if test="categoryId != null and categoryId != ''">
+                AND category_id = #{categoryId}
+            </if>
+            <!-- 如果 productName 不为空，则添加商品名称过滤条件 -->
+            <if test="productName != null and productName != ''">
+                AND product_name LIKE CONCAT('%', #{productName}, '%')
+            </if>
+
+            <!-- 如果 minPrice 或 maxPrice 不为空，则添加价格范围过滤条件 -->
+            <if test="minPrice != null and maxPrice != null">
+                AND product_price BETWEEN #{minPrice} AND #{maxPrice}
+            </if>
+
+            <!-- 如果只有 minPrice 存在，则添加大于等于 minPrice 的条件 -->
+            <if test="minPrice != null and maxPrice == null">
+                AND product_price &gt;= #{minPrice}
+            </if>
+
+            <!-- 如果只有 maxPrice 存在，则添加小于等于 maxPrice 的条件 -->
+            <if test="minPrice == null and maxPrice != null">
+                AND product_price &lt;= #{maxPrice}
+            </if>
+        </where>
+    </select>
+
 </mapper>

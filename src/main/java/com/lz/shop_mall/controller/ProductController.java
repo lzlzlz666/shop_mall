@@ -1,13 +1,11 @@
 package com.lz.shop_mall.controller;
 
+import com.lz.shop_mall.pojo.PageBean;
 import com.lz.shop_mall.pojo.Product;
 import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +33,21 @@ public class ProductController {
     @GetMapping("/{id}")
     public Result<Product> getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
+    }
+
+    // 分页查询商品信息
+    @GetMapping("/list")
+    public Result<PageBean<Product>> list(
+            Integer pageNum,
+            Integer pageSize,
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) String productName,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice
+    ) {
+        PageBean<Product> pb = productService.list(pageNum, pageSize, categoryId, productName, minPrice, maxPrice);
+
+        return Result.success(pb);
     }
 
 }

@@ -1,6 +1,9 @@
 package com.lz.shop_mall.service.Impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.lz.shop_mall.mapper.ProductMapper;
+import com.lz.shop_mall.pojo.PageBean;
 import com.lz.shop_mall.pojo.Product;
 import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.service.ProductService;
@@ -43,6 +46,31 @@ public class ProductServiceImpl implements ProductService {
             return Result.error("未找到商品");
         }
         return Result.success(product);
+    }
+
+    /**
+     * 条件分页列表查询
+     * @param pageNum
+     * @param pageSize
+     * @param productName
+     * @param minPrice
+     * @param maxPrice
+     * @return
+     */
+    public PageBean<Product> list(Integer pageNum, Integer pageSize, Integer categoryId, String productName, Double minPrice, Double maxPrice) {
+        // 创建分页Bean对象
+        PageBean<Product> pageBean = new PageBean<>();
+
+        // 使用分页查询的插件
+        PageHelper.startPage(pageNum, pageSize);
+
+        List<Product> lp = productMapper.listByCondition(categoryId, productName, minPrice, maxPrice);
+
+        Page<Product> p = (Page<Product>) lp;
+        // 强转之后调用pageBean的方法
+        pageBean.setTotal(p.getTotal());
+        pageBean.setItems(p.getResult());
+        return pageBean;
     }
 
 

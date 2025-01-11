@@ -17,4 +17,6 @@ public interface ProductMapper {
 
     @Select("select * from product where product_id = #{id}")
     Product getProduct(Long id);
+
+    List<Product> listByCondition(Integer categoryId, String productName, Double minPrice, Double maxPrice);
 }
