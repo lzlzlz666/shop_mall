@@ -2,15 +2,13 @@ package com.lz.shop_mall.controller;
 
 import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.pojo.User;
+import com.lz.shop_mall.pojo.dto.UserDTO;
 import com.lz.shop_mall.service.UserService;
 import com.lz.shop_mall.util.JwtUtil;
 import com.lz.shop_mall.util.Md5Util;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +60,13 @@ public class UserController {
         }
 
         return Result.error("密码错误");
+    }
+
+    /*获取当前登录用户的信息*/
+    @GetMapping
+    public Result<UserDTO> loginUserList() {
+        UserDTO userDTO = userService.loginUserList();
+        return Result.success(userDTO);
     }
 
 }
