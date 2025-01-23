@@ -1,5 +1,6 @@
 package com.lz.shop_mall.service;
 
+import com.lz.shop_mall.pojo.Order;
 import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.pojo.UserAddress;
 
@@ -11,4 +12,8 @@ public interface OrderService {
     Result update(Integer userAddressId);
 
     Result add(UserAddress userAddress);
+
+    Result<Order> generateOrder(Order order);
+
+    Result purchaseOrder(List<Order> listOrders);
 }

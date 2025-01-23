@@ -1,6 +1,7 @@
 package com.lz.shop_mall.service.Impl;
 
 import com.lz.shop_mall.mapper.OrderMapper;
+import com.lz.shop_mall.pojo.Order;
 import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.pojo.UserAddress;
 import com.lz.shop_mall.service.OrderService;
@@ -81,6 +82,49 @@ public class OrderServiceImpl implements OrderService {
         userAddress1.setUpdateTime(LocalDateTime.now());
 
         orderMapper.add(userAddress1);
+
+        return Result.success();
+    }
+
+    /**
+     * 生成订单
+     * @param order
+     * @return
+     */
+    public Result<Order> generateOrder(Order order) {
+        Order order1 = new Order();
+
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+
+        Integer addressId = orderMapper.getAddressId(id);
+
+        order1.setUserId(id);
+        order1.setAddressId(addressId);
+        order1.setProductId(order.getProductId());
+        order1.setProductCount(order.getProductCount());
+        order1.setProductFormat(order.getProductFormat());
+        order1.setProductPrice(order.getProductPrice());
+        order1.setIsPay(0);
+        order1.setCreateTime(LocalDateTime.now());
+        order1.setUpdateTime(LocalDateTime.now());
+        orderMapper.generateOrder(order1);
+
+        return Result.success(order1);
+    }
+
+    /**
+     * 对多个订单进行购买
+     * @param listOrders
+     * @return
+     */
+    public Result purchaseOrder(List<Order> listOrders) {
+
+        // 遍历订单列表
+        for (Order order : listOrders) {
+            Integer orderId = order.getOrderId();
+            orderMapper.purchaseOrder(orderId);
+        }
 
         return Result.success();
     }

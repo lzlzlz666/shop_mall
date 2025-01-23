@@ -1,6 +1,7 @@
 package com.lz.shop_mall.controller;
 
 
+import com.lz.shop_mall.pojo.Order;
 import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.pojo.UserAddress;
 import com.lz.shop_mall.service.OrderService;
@@ -26,8 +27,18 @@ public class OrderController {
         return orderService.update(userAddressId);
     }
 
-    @PostMapping("addUserAddress")
+    @PostMapping("/addUserAddress")
     public Result addUserAddress(@RequestBody UserAddress userAddress) {
         return orderService.add(userAddress);
+    }
+
+    @PostMapping("/generateOrder")
+    public Result<Order> generateOrder(@RequestBody Order order) {
+        return orderService.generateOrder(order);
+    }
+
+    @PostMapping("/purchaseOrder")
+    public Result purchaseOrder(@RequestBody List<Order> listOrders) {
+        return orderService.purchaseOrder(listOrders);
     }
 }
