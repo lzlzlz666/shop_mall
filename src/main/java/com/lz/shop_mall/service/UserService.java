@@ -1,5 +1,6 @@
 package com.lz.shop_mall.service;
 
+import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.pojo.User;
 import com.lz.shop_mall.pojo.dto.UserDTO;
 
@@ -9,4 +10,8 @@ public interface UserService {
     void register(String username, String password);
 
     UserDTO loginUserList();
+
+    Result updateUserInfo(User user);
+
+    void updateAvatar(String avatarUrl);
 }

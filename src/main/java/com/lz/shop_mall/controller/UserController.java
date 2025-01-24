@@ -7,6 +7,7 @@ import com.lz.shop_mall.service.UserService;
 import com.lz.shop_mall.util.JwtUtil;
 import com.lz.shop_mall.util.Md5Util;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,6 +68,17 @@ public class UserController {
     public Result<UserDTO> loginUserList() {
         UserDTO userDTO = userService.loginUserList();
         return Result.success(userDTO);
+    }
+
+    @PostMapping("/userInfo")
+    public Result updateUserInfo(@RequestBody User user) {
+        return userService.updateUserInfo(user);
+    }
+
+    @PatchMapping("/updateAvatar")
+    public Result updateAvatar(@RequestParam @URL String avatarUrl){
+        userService.updateAvatar(avatarUrl);
+        return Result.success();
     }
 
 }

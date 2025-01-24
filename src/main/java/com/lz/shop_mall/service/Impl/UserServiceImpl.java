@@ -1,6 +1,7 @@
 package com.lz.shop_mall.service.Impl;
 
 import com.lz.shop_mall.mapper.UserMapper;
+import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.pojo.User;
 import com.lz.shop_mall.pojo.dto.UserDTO;
 import com.lz.shop_mall.service.UserService;
@@ -9,6 +10,7 @@ import com.lz.shop_mall.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -47,5 +49,28 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer id = (Integer) map.get("id");
         return userMapper.getUserLogin(id);
+    }
+
+    /**
+     * 修改个人信息
+     * @param user
+     * @return
+     */
+    public Result updateUserInfo(User user) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+
+        userMapper.update(user, userId);
+        return Result.success();
+    }
+
+    /**
+     * 更新用户头像
+     * @param avatarUrl
+     */
+    public void updateAvatar(String avatarUrl) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        userMapper.updateAvatar(avatarUrl, id);
     }
 }
