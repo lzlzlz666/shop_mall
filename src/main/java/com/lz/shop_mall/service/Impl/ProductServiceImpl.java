@@ -73,5 +73,14 @@ public class ProductServiceImpl implements ProductService {
         return pageBean;
     }
 
+    /**
+     * 猜你喜欢的商品
+     * @param limit
+     * @return
+     */
+    public List<Product> getLikeProducts(int limit) {
+        return productMapper.getLikeProducts(limit);
+    }
+
 
 }

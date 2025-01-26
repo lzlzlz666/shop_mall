@@ -2,6 +2,7 @@ package com.lz.shop_mall.mapper;
 
 
 import com.lz.shop_mall.pojo.Order;
+import com.lz.shop_mall.pojo.Result;
 import com.lz.shop_mall.pojo.UserAddress;
 import org.apache.ibatis.annotations.*;
 
@@ -15,6 +16,9 @@ public interface OrderMapper {
 
     @Update("UPDATE user_address SET default_address = 1 WHERE user_id = #{id}")
     void updateAllAddressToNotDefault(Integer id);
+
+    @Select("select * from user_address where user_address_id = #{userAddressId}")
+    UserAddress getAddressByUserAddressId(Integer userAddressId);
 
     @Update("UPDATE user_address SET default_address = 0 WHERE user_address_id = #{userAddressId}")
     void updateAddressToDefault(Integer userAddressId);
@@ -33,4 +37,13 @@ public interface OrderMapper {
 
     @Update("UPDATE `order` SET is_pay = 1 WHERE order_id = #{orderId}")
     void purchaseOrder(Integer orderId);
+
+    @Select("select * from `order` where user_id = #{id}")
+    List<Order> getOrders(Integer id);
+
+    @Delete("DELETE FROM `order` WHERE order_id = #{orderId} AND user_id = #{userId}")
+    void delete(Integer orderId, Integer userId);
+
+    @Delete("delete from user_address where user_address_id = #{id}")
+    void deleteAddress(Integer id);
 }

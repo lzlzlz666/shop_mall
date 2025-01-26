@@ -50,4 +50,10 @@ public class ProductController {
         return Result.success(pb);
     }
 
+    // 获取猜你喜欢商品，支持 limit 参数
+    @GetMapping("/like")
+    public Result<List<Product>> getLikeProducts(@RequestParam(defaultValue = "3") int limit) {
+        List<Product> likeProducts = productService.getLikeProducts(limit);
+        return Result.success(likeProducts);
+    }
 }

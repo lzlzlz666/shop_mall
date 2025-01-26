@@ -14,4 +14,6 @@ public interface ProductService {
     Result<Product> getProductById(Long id);
 
     PageBean<Product> list(Integer pageNum, Integer pageSize, Integer categoryId, String productName, Double minPrice, Double maxPrice);
+
+    List<Product> getLikeProducts(int limit);
 }
