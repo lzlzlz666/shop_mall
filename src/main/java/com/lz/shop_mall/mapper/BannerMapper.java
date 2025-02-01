@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper
 public interface BannerMapper {
 
-    @Select("select * from banner where user_id = #{id}")
-    List<Banner> list(Integer id);
+    @Select("select * from banner")
+    List<Banner> list();
 }

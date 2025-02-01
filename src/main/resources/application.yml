@@ -16,4 +16,9 @@ mybatis:
 
 server:
   port: 8092
+#  ssl:
+#    key-store: classpath:linzhou.tech.pfx
+#    key-store-password: fgmrm2rn
+#    key-store-type: PKCS12
+#    enabled: true
 

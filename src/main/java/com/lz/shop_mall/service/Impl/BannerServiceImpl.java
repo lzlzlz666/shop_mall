@@ -22,10 +22,8 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     public Result<List<Banner>> getList() {
-        Map<String, Object> map = ThreadLocalUtil.get();
-        Integer id = (Integer) map.get("id");
 
-        List<Banner> bannerList = bannerMapper.list(id);
+        List<Banner> bannerList = bannerMapper.list();
         if( bannerList == null) {
             return Result.error("没有轮播图");
         }

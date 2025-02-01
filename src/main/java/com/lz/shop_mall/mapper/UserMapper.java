@@ -24,5 +24,4 @@ public interface UserMapper {
     @Update("UPDATE user SET nickname=#{user.nickname}, email=#{user.email}, " +
             "birthday=#{user.birthday}, phone_number=#{user.phoneNumber}, user_pic=#{user.userPic}, sex=#{user.sex}, address=#{user.address}, update_time=now() WHERE user_id=#{userId}")
     void update(@Param("user") User user, @Param("userId") Integer userId);
-
 }

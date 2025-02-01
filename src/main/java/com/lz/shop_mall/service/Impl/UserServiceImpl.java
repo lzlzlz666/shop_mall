@@ -73,4 +73,14 @@ public class UserServiceImpl implements UserService {
         Integer id = (Integer) map.get("id");
         userMapper.updateAvatar(avatarUrl, id);
     }
+
+    /**
+     * 根据id 查询数据库中user的信息
+     * @param id
+     * @return
+     */
+    public Result<UserDTO> getUserById(Integer id) {
+        UserDTO userDTO = userMapper.getUserLogin(id);
+        return Result.success(userDTO);
+    }
 }

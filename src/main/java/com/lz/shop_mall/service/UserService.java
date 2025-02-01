@@ -14,4 +14,6 @@ public interface UserService {
     Result updateUserInfo(User user);
 
     void updateAvatar(String avatarUrl);
+
+    Result<UserDTO> getUserById(Integer id);
 }

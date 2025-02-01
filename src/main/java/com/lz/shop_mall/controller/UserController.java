@@ -70,6 +70,11 @@ public class UserController {
         return Result.success(userDTO);
     }
 
+    @GetMapping("/{id}")
+    public Result<UserDTO> getUserInfoById (@PathVariable("id") Integer id) {
+        return userService.getUserById(id);
+    }
+
     @PostMapping("/userInfo")
     public Result updateUserInfo(@RequestBody User user) {
         return userService.updateUserInfo(user);
