@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                                     "/user/register",
                                     "/category",
                                     "/product/**",
-                                    "/banner/**");
+                                    "/banner/**",
+                                    "/comment");
     }
 }

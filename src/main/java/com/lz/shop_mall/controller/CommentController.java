@@ -22,9 +22,15 @@ public class CommentController {
         return commentService.sendComment(comment);
     }
 
-    @GetMapping()
+    @GetMapping("/allComments")
     public Result<List<CommentDTO>> getComments(@RequestParam int productId) {
         return commentService.getComments(productId);
+    }
+
+    // 未登录用户只能看两条评论(含子评论)
+    @GetMapping()
+    public Result<List<CommentDTO>> getTwoComments(@RequestParam int productId) {
+        return commentService.getTwoComments(productId);
     }
 
     @GetMapping("/{id}")

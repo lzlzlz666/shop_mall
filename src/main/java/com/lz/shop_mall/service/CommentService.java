@@ -14,4 +14,6 @@ public interface CommentService {
     Result<Comment> getComment(Integer id);
 
     Result thumbUp(int commentId, int likeState);
+
+    Result<List<CommentDTO>> getTwoComments(int productId);
 }

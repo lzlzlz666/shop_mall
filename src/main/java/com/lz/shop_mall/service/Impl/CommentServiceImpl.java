@@ -62,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
             CommentDTO commentDTO = new CommentDTO();
 
             Integer commentId = comment.getCommentId();
-            UserDTO sendUser = userMapper.getUserLogin(userId);
+            UserDTO sendUser = userMapper.getUserLogin(comment.getUserId());
 
             // 判断登录的用户是否对这篇文章进行点赞
             LikeComment likeComment = likeCommentMapper.getLikeCommentByUserId(userId, commentId);
@@ -186,5 +186,65 @@ public class CommentServiceImpl implements CommentService {
         }
 
         return Result.success("更改点赞信息成功!");
+    }
+
+    /**
+     * 获取两条评论
+     * @param productId
+     * @return
+     */
+    public Result<List<CommentDTO>> getTwoComments(int productId) {
+
+        // 获取所有评论
+        List<Comment> commentList = commentMapper.getComments(productId);
+
+        // 如果评论数量超过2条，只取前两条
+        if (commentList.size() > 2) {
+            commentList = commentList.subList(0, 2);
+        }
+
+        // 创建一个新的 List 用来存放转换后的 CommentDTO 列表
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+
+        // 遍历评论列表，将每个 Comment 转换为 CommentDTO
+        for (Comment comment : commentList) {
+            CommentDTO commentDTO = new CommentDTO();
+
+            Integer commentId = comment.getCommentId();
+            UserDTO sendUser = userMapper.getUserLogin(comment.getUserId());
+
+            // 设置 CommentDTO 的属性
+            commentDTO.setCommentId(comment.getCommentId());
+            commentDTO.setProductId(productId);
+            commentDTO.setContent(comment.getContent());
+            commentDTO.setUserId(comment.getUserId());
+            commentDTO.setUsername(sendUser.getUsername());
+            commentDTO.setUserPic(sendUser.getUserPic());
+            commentDTO.setLike(comment.getLike());
+            commentDTO.setPid(comment.getPid());
+            commentDTO.setTargetUserId(comment.getTargetUserId());
+            commentDTO.setTarget(null);
+            commentDTO.setCreateTime(comment.getCreateTime());
+
+            // 如果需要 List<Comment> 参数，可以在这里设置
+            List<Comment> TempLC = commentMapper.getSonComments(comment.getCommentId());
+            for (Comment comment1 : TempLC) {
+                Integer userId1 = comment1.getUserId();
+                Integer targetUserId1 = comment1.getTargetUserId();
+
+                UserDTO sendUser1 = userMapper.getUserLogin(userId1);
+                UserDTO targetUser1 = userMapper.getUserLogin(targetUserId1);
+
+                comment1.setUsername(sendUser1.getUsername());
+                comment1.setUserPic(sendUser1.getUserPic());
+                comment1.setTarget(targetUser1.getUsername());
+            }
+            commentDTO.setListComments(TempLC);
+
+            // 将 CommentDTO 添加到结果列表中
+            commentDTOList.add(commentDTO);
+        }
+
+        return Result.success(commentDTOList);
     }
 }
