@@ -2,14 +2,14 @@ package com.lz.shop_mall.service.Impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lz.shop_mall.mapper.ProductImgsMapper;
 import com.lz.shop_mall.mapper.ProductMapper;
-import com.lz.shop_mall.pojo.PageBean;
-import com.lz.shop_mall.pojo.Product;
-import com.lz.shop_mall.pojo.Result;
+import com.lz.shop_mall.pojo.*;
 import com.lz.shop_mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +17,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private ProductImgsMapper productImgsMapper;
 
     /**
      * 获取所有商品
@@ -42,6 +45,21 @@ public class ProductServiceImpl implements ProductService {
      */
     public Result getProductById(Long id) {
         Product product = productMapper.getProduct(id);
+
+        List<ProductImg> productImgs = productImgsMapper.getProductImgs(id);
+        List<ProductDetailImg> productDetailImgs = productImgsMapper.getProductDetailImgs(id);
+
+        List<String> imgList = new ArrayList<>();
+        List<String> detailImgList = new ArrayList<>();
+
+        for (ProductImg productImg : productImgs) {
+            imgList.add(productImg.getProductImg());
+        }
+        for (ProductDetailImg productDetailImg : productDetailImgs) {
+            detailImgList.add(productDetailImg.getProductDetailImg());
+        }
+        product.setProductImgs(imgList);
+        product.setProductDetailImgs(detailImgList);
         if (product == null) {
             return Result.error("未找到商品");
         }

@@ -1,8 +1,11 @@
 package com.lz.shop_mall.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class Product {
@@ -17,4 +20,11 @@ public class Product {
     private String productImg; // 商品图片
     private LocalDateTime createTime; // 商品创建时间
     private LocalDateTime updateTime; // 商品更新时间
+
+    // 默认忽略 productImgs 字段
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> productImgs;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> productDetailImgs;
 }
