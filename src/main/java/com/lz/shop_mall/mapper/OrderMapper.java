@@ -46,4 +46,7 @@ public interface OrderMapper {
 
     @Delete("delete from user_address where user_address_id = #{id}")
     void deleteAddress(Integer id);
+
+    @Select("select * from `order` where order_id = #{id}")
+    Order getOrdersByOrderId(Integer id);
 }

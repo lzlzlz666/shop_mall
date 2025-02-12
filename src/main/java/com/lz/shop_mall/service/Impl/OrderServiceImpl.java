@@ -221,4 +221,22 @@ public class OrderServiceImpl implements OrderService {
 
         return Result.success("删除地址信息成功!");
     }
+
+    /**
+     * 根据id 获取订单号的支付状态
+     * @param id
+     * @return
+     */
+    public Result getOrderStatus(Integer id) {
+        Order orders = orderMapper.getOrdersByOrderId(id);
+        if (orders == null) {
+            return Result.error("无订单");
+        }
+        if (orders.getIsPay() == 1) {
+            return Result.success("已支付");
+        } else if (orders.getIsPay() == 0 ) {
+            return Result.success("未支付");
+        }
+        return Result.error("无订单");
+    }
 }

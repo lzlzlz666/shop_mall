@@ -23,4 +23,6 @@ public interface OrderService {
     Result delete(Integer id);
 
     Result deleteAddress(Integer id);
+
+    Result<String> getOrderStatus(Integer id);
 }

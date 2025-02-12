@@ -22,6 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
                                     "/category",
                                     "/product/**",
                                     "/banner/**",
-                                    "/comment");
+                                    "/comment",
+                                    "/alipay/**");
     }
 }

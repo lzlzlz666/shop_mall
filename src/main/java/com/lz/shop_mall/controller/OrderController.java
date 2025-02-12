@@ -39,7 +39,6 @@ public class OrderController {
         return orderService.deleteAddress(id);
     }
 
-
     @PostMapping("/generateOrder")
     public Result<Order> generateOrder(@RequestBody Order order) {
         return orderService.generateOrder(order);
