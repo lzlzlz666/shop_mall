@@ -21,6 +21,8 @@ public class Product {
     private LocalDateTime createTime; // 商品创建时间
     private LocalDateTime updateTime; // 商品更新时间
 
+    private List<String> productFormats; // 商品的规格
+
     // 默认忽略 productImgs 字段
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> productImgs;

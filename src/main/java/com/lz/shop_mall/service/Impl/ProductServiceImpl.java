@@ -2,6 +2,7 @@ package com.lz.shop_mall.service.Impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lz.shop_mall.mapper.ProductFormatMapper;
 import com.lz.shop_mall.mapper.ProductImgsMapper;
 import com.lz.shop_mall.mapper.ProductMapper;
 import com.lz.shop_mall.pojo.*;
@@ -20,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductImgsMapper productImgsMapper;
+
+    @Autowired
+    private ProductFormatMapper productFormatMapper;
 
     /**
      * 获取所有商品
@@ -48,9 +52,15 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductImg> productImgs = productImgsMapper.getProductImgs(id);
         List<ProductDetailImg> productDetailImgs = productImgsMapper.getProductDetailImgs(id);
+        List<ProductFormat> productFormats = productFormatMapper.getProductFormatsById(id);
 
+        List<String> formatsList = new ArrayList<>();
         List<String> imgList = new ArrayList<>();
         List<String> detailImgList = new ArrayList<>();
+
+        for (ProductFormat productFormat : productFormats ) {
+            formatsList.add(productFormat.getProductFormat());
+        }
 
         for (ProductImg productImg : productImgs) {
             imgList.add(productImg.getProductImg());
@@ -58,6 +68,8 @@ public class ProductServiceImpl implements ProductService {
         for (ProductDetailImg productDetailImg : productDetailImgs) {
             detailImgList.add(productDetailImg.getProductDetailImg());
         }
+
+        product.setProductFormats(formatsList);
         product.setProductImgs(imgList);
         product.setProductDetailImgs(detailImgList);
         if (product == null) {
